@@ -1,0 +1,4 @@
+interface:
+  display_name: "C4 Diagrams"
+  short_description: "Create and review practical C4 architecture diagrams."
+  default_prompt: "Use $c4-diagrams to model and render the architecture of this system."
