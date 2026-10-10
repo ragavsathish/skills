@@ -1,0 +1,4 @@
+interface:
+  display_name: "Extract Video Slides"
+  short_description: "Compile presentation videos into grounded agent skills."
+  default_prompt: "Use $extract-video-slides to compile this presentation video into a grounded subject skill."
