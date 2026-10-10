@@ -15,7 +15,6 @@ Reach for it when the *words* are the problem:
 | Two people mean different things by "cancellation" | `domain-modeling`: pick the canonical term, list the other under `_Avoid_` |
 | "Account" is doing three jobs in three files | `domain-modeling`: split it into Customer and User |
 | You just made a hard-to-reverse architectural choice | `domain-modeling`: it offers an ADR, if the choice clears the bar |
-| An existing ADR's assumptions or decision have changed | `domain-modeling`: reassess the reasons and link a replacement if needed |
 | The module's *shape* is the problem: where the seam goes, how deep the interface is | [codebase-design](https://aihero.dev/skills-codebase-design) |
 | You want the whole plan interrogated before you build | [grill-with-docs](https://aihero.dev/skills-grill-with-docs), which drives this skill underneath |
 | You want a term looked up, not changed | Nothing. Read `GLOSSARY.md`. It is a file. |
@@ -40,9 +39,7 @@ The glossary and the ADR have different bars. Most of the trouble with this skil
 | Written | Inline, the moment the term is settled | Offered, not assumed |
 | Never holds | Implementation details, a [spec](https://www.aihero.dev/ai-coding-dictionary/spec), a scratch pad, general programming concepts | A diary of every choice made this session |
 
-Miss any one of the ADR's three tests and the skill skips an unsolicited offer. An explicit request to record a decision still applies. The default keeps incidental documentation focused on choices whose reasoning is worth preserving.
-
-For an ADR you do write, the skill checks whether the reason connects to the project's constraints and outcomes, and captures meaningful alternatives and accepted drawbacks. When a decision is revisited, it checks the original assumptions. Accepted reasoning remains intact: a changed decision gets a linked replacement, while the previous record is marked superseded. Review dates or triggers can prompt reassessment without automatically invalidating a choice.
+Miss any one of the ADR's three tests and there is no ADR. An easily-reversed decision will just get reversed; an unsurprising one is nobody's question; one with no real alternative records that you did the obvious thing.
 
 The `GLOSSARY.md` rule matters most, because it is the one that breaks in practice. **It is a glossary and nothing else.** Left unchecked, models treat "write to `GLOSSARY.md`" as permission to persist every answer you give, and the file turns into a running spec. This is the most-reported problem with the skill, across several models.
 
@@ -79,8 +76,7 @@ No, and there is no plan for a skill that does. A domain language you do not und
 
 - It stops you mid-sentence to ask which of two things you meant, instead of picking one and moving on.
 - `GLOSSARY.md` changes **during** the conversation, not in a burst at the end.
-- It skips unsolicited ADR offers for choices that fail the three tests, while honoring explicit requests to record a decision.
-- A replacement ADR explains what changed and links to the original reasoning, which remains readable.
+- It refuses to write an ADR for something you could undo tomorrow, and says which of the three tests failed.
 - New entries define what a thing *is* in one or two sentences and name the words you are giving up under `_Avoid_`.
 - It quotes your code back at you when your code and your sentence disagree.
 - `GLOSSARY.md` gets shorter as often as it gets longer.
@@ -88,3 +84,5 @@ No, and there is no plan for a skill that does. A domain language you do not und
 ## Where it fits
 
 `domain-modeling` is a **model-invoked reference** that runs *underneath* other skills more often than it runs on its own. [grill-with-docs](https://aihero.dev/skills-grill-with-docs) drives it through a grilling session, [wayfinder](https://aihero.dev/skills-wayfinder) loads it while charting a map, [triage](https://aihero.dev/skills-triage) uses it to keep [tickets](https://www.aihero.dev/ai-coding-dictionary/ticket) in the project's own words, and [improve-codebase-architecture](https://aihero.dev/skills-improve-codebase-architecture) calls it as decisions settle. Its closest sibling is [codebase-design](https://aihero.dev/skills-codebase-design). Together they are the vocabulary layer under everything else, this one for the *domain*, that one for the module's *shape*. It is also reachable directly, when you want the discipline without committing to the steps of whatever skill would normally load it. When you are unsure which skill fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.
+
+This fork adds [ADR lifecycle guidance](https://github.com/ragavsathish/skills/blob/main/skills/engineering/domain-modeling/ADR-LIFECYCLE.md): check decision reasoning, revisit changing assumptions, and preserve accepted decisions through linked replacements. Explicit requests to record decisions take precedence over the threshold for unsolicited offers.

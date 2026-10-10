@@ -45,5 +45,5 @@ jobs:
             -f base=main \
             -f head=mattpocock:main \
             -f title='Sync upstream mattpocock/skills' \
-            -f body='Bring upstream main into this fork. This PR tracks mattpocock:main and updates as upstream advances. Review changes and resolve any conflicts before merging; this workflow never merges automatically.' \
+            -f body='Bring upstream main into this fork. This PR tracks mattpocock:main and updates as upstream advances. Use a merge commit to preserve upstream ancestry; squashing or rebasing this sync loses the shared commit history. Review changes and resolve any conflicts before merging; this workflow never merges automatically.' \
             --jq '.html_url'
