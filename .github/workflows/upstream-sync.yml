@@ -1,0 +1,49 @@
+name: Check upstream
+
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  upstream-sync:
+    if: github.repository == 'ragavsathish/skills'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ragavsathish/skills
+    steps:
+      - name: Open an upstream sync pull request when needed
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ahead=$(gh api "repos/$GH_REPO/compare/main...mattpocock:main" --jq '.ahead_by')
+          if [[ "$ahead" == 0 ]]; then
+            echo 'The fork already contains all upstream commits.'
+            exit 0
+          fi
+
+          existing=$(gh api --method GET "repos/$GH_REPO/pulls" \
+            -f state=open -f base=main -f head=mattpocock:main \
+            --jq '.[0].html_url // empty')
+          if [[ -n "$existing" ]]; then
+            echo "Upstream sync PR already open: $existing"
+            exit 0
+          fi
+
+          gh api --method POST "repos/$GH_REPO/pulls" \
+            -f base=main \
+            -f head=mattpocock:main \
+            -f title='Sync upstream mattpocock/skills' \
+            -f body='Bring upstream main into this fork. This PR tracks mattpocock:main and updates as upstream advances. Use a merge commit to preserve upstream ancestry; squashing or rebasing this sync loses the shared commit history. Review changes and resolve any conflicts before merging; this workflow never merges automatically.' \
+            --jq '.html_url'
